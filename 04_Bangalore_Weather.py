@@ -25,7 +25,7 @@ def get_Bangalore_Hourly_Weather_Report():
         Cloudy_Inforamtion = soup.find_all(class_ ='entry-precipitation-value cloud-cover')
         Rain_Information = soup.find_all(class_ ='entry-precipitation-value rain unitE-BI')
 
-        for i in range(0,2):
+        for i in range(0,12):
             print("Hour         :",Hour_Information[i*2-1].text)
             print("Forecast     :",Forecast_Information[i].text)
             print("Real Feel    :",Forecast_RealFeel_Information[i].text)
