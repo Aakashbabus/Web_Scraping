@@ -1,158 +1,69 @@
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
+from tabulate import tabulate
 
 def main():
-    print ("\n")
-    get_SENSEX_Data()
-    get_NIFTY50_Data()
-    get_NIFTYBANK_Data()
-    get_NIFTYNXT50_Data()
-    get_NIFTYMIDCAP50_Data()
-    get_NIFTYSMALLCAP50_Data()
-    get_NIFTYIT_Data()
-    print ("\n")
+    data = []
+    data.append(get_SENSEX_Data())
+    data.append(get_NIFTY50_Data())
+    data.append(get_NIFTYBANK_Data())
+    data.append(get_NIFTYNXT50_Data())
+    data.append(get_NIFTYMIDCAP50_Data())
+    data.append(get_NIFTYSMALLCAP50_Data())
+    data.append(get_NIFTYIT_Data())
 
-def get_NIFTY50_Data():
-    # URL of the webpage to scrape
-    url = "https://upstox.com/indices/nifty-50-share-price/"  # Replace with the actual URL
-
-    # Send a GET request to the webpage
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(response.content, 'html.parser')
+    # Create a DataFrame
+    df = pd.DataFrame(data, columns=["Index", "Share Price", "1D Change", "1M Change", "1Y Change"])
     
-        # Find content with specific class and extract their text
-        content1 = soup.find_all(class_='text-[32px]')
-        content2 = soup.find_all(class_='text-base')
-        print("NIFTY 50             Share Price:",content1[0].text,content2[3].text)
-
-    else:
-        print("Failed to retrieve the webpage.",response.status_code)
-
+    
+    # Print the DataFrame as a table
+    print("\n")
+    print(tabulate(df, headers='keys', tablefmt='grid'))
+    print("\n")
+    
+def get_NIFTY50_Data():
+    url = "https://upstox.com/indices/nifty-50-share-price/"
+    return get_data(url, "NIFTY 50")
 
 def get_SENSEX_Data():
-    # URL of the webpage to scrape
-    url = "https://upstox.com/indices/sensex-share-price/"  # Replace with the actual URL
-
-    # Send a GET request to the webpage
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(response.content, 'html.parser')
-    
-        # Find content with specific class and extract their text
-        content1 = soup.find_all(class_='text-[32px]')
-        content2 = soup.find_all(class_='text-base')
-        print("SENSEX               Share Price:",content1[0].text,content2[3].text)
-
-    else:
-        print("Failed to retrieve the webpage.",response.status_code)
+    url = "https://upstox.com/indices/sensex-share-price/"
+    return get_data(url, "SENSEX")
 
 def get_NIFTYBANK_Data():
-    # URL of the webpage to scrape
-    url = "https://upstox.com/indices/nifty-bank-share-price/"  # Replace with the actual URL
-
-    # Send a GET request to the webpage
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(response.content, 'html.parser')
-    
-        # Find content with specific class and extract their text
-        content1 = soup.find_all(class_='text-[32px]')
-        content2 = soup.find_all(class_='text-base')
-        print("NIFTY BANK           Share Price:",content1[0].text,content2[3].text)
-
-    else:
-        print("Failed to retrieve the webpage.",response.status_code)
+    url = "https://upstox.com/indices/nifty-bank-share-price/"
+    return get_data(url, "NIFTY BANK")
 
 def get_NIFTYNXT50_Data():
-    # URL of the webpage to scrape
-    url = "https://upstox.com/indices/nifty-next-50-share-price/"  # Replace with the actual URL
-
-    # Send a GET request to the webpage
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(response.content, 'html.parser')
-    
-        # Find content with specific class and extract their text
-        content1 = soup.find_all(class_='text-[32px]')
-        content2 = soup.find_all(class_='text-base')
-        print("NIFTY NXT50          Share Price:",content1[0].text,content2[3].text)
-
-    else:
-        print("Failed to retrieve the webpage.",response.status_code)
+    url = "https://upstox.com/indices/nifty-next-50-share-price/"
+    return get_data(url, "NIFTY NXT50")
 
 def get_NIFTYMIDCAP50_Data():
-    # URL of the webpage to scrape
-    url = "https://upstox.com/indices/nifty-midcap-50-share-price/"  # Replace with the actual URL
+    url = "https://upstox.com/indices/nifty-midcap-50-share-price/"
+    return get_data(url, "NIFTY MIDCAP50")
 
-    # Send a GET request to the webpage
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(response.content, 'html.parser')
-    
-        # Find content with specific class and extract their text
-        content1 = soup.find_all(class_='text-[32px]')
-        content2 = soup.find_all(class_='text-base')
-        print("NIFTY MIDCAP50       Share Price:",content1[0].text,content2[3].text)
-
-    else:
-        print("Failed to retrieve the webpage.",response.status_code)
-
-def  get_NIFTYSMALLCAP50_Data():
-    # URL of the webpage to scrape
-    url = "https://upstox.com/indices/nifty-smlcap-50-share-price/"  # Replace with the actual URL
-
-    # Send a GET request to the webpage
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(response.content, 'html.parser')
-    
-        # Find content with specific class and extract their text
-        content1 = soup.find_all(class_='text-[32px]')
-        content2 = soup.find_all(class_='text-base')
-        print("NIFTY SMALLCAP50     Share Price:",content1[0].text,content2[3].text)
-
-    else:
-        print("Failed to retrieve the webpage.",response.status_code)
+def get_NIFTYSMALLCAP50_Data():
+    url = "https://upstox.com/indices/nifty-smlcap-50-share-price/"
+    return get_data(url, "NIFTY SMALLCAP50")
 
 def get_NIFTYIT_Data():
-    # URL of the webpage to scrape
-    url = "https://upstox.com/indices/nifty-it-share-price/"  # Replace with the actual URL
+    url = "https://upstox.com/indices/nifty-it-share-price/"
+    return get_data(url, "NIFTY IT")
 
-    # Send a GET request to the webpage
+def get_data(url, index_name):
     response = requests.get(url)
-
-    # Check if the request was successful
     if response.status_code == 200:
-        # Create a BeautifulSoup object
         soup = BeautifulSoup(response.content, 'html.parser')
-    
-        # Find content with specific class and extract their text
         content1 = soup.find_all(class_='text-[32px]')
         content2 = soup.find_all(class_='text-base')
-        print("NIFTY IT             Share Price:",content1[0].text,content2[3].text)
-
+        content3 = soup.find_all(class_='text-sm font-medium leading-5 text-bar-chart-green')
+        share_price = content1[0].text
+        Day_Change = content2[3].text
+        Month_Change = content3[2].text
+        Year_Change = content3[4].text
+        return [index_name, share_price, Day_Change, Month_Change, Year_Change]
     else:
-        print("Failed to retrieve the webpage.",response.status_code)
-
+        return [index_name, "Failed to retrieve data", "", "", ""]
 
 if __name__ == "__main__":
     main()
